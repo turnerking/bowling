@@ -8,6 +8,16 @@ describe Game do
         game = Game.new("X X X X X X X X X X X X")
         game.final_score.should == 300
       end
+      
+      it "is 299 on all strikes with 9 as last ball" do
+        game = Game.new("X X X X X X X X X X X 9")
+        game.final_score.should == 299
+      end
+      
+      it "is 281 on all strikes with 2 7 as last two balls" do
+        game = Game.new("X X X X X X X X X X 2 7")
+        game.final_score.should == 281
+      end
   
       it "is 90 on all 9's" do
         game = Game.new("9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0")
@@ -17,7 +27,12 @@ describe Game do
       it "is 199 on spare/9's" do
         game = Game.new("9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9")
         game.final_score.should == 199
-      end       
+      end  
+      
+      it "is 145 on odd scores" do
+        game = Game.new("0 / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 0")
+        game.final_score.should == 145
+      end     
     end
   end
   

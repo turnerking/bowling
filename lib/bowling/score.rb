@@ -16,7 +16,7 @@ class Score
   end
   
   def X
-    (last_score? || second_to_last_score?) ? 0 : (10 + next_score.amount + next_score.amount)
+    (last_score? || second_to_last_score?) ? 0 : (10 + next_score.amount + next_score.next_score.amount)
   end
   
   def /
@@ -24,8 +24,18 @@ class Score
   end
   
   def method_missing(name, *args, &block)
-    return name.to_s.to_i if name.to_s.match(/^[0-9]$/)
+    if name.to_s.match(/^[0-9]$/)
+      return open_roll(name)
+    end
     super(name, *args, &block)
+  end
+  
+  def open_roll(score_mark)
+    if (last_score? || second_to_last_score?) && ([prev_score.mark, prev_score.prev_score.mark].include?("X"))
+      return 0
+    else
+      return score_mark.to_s.to_i
+    end
   end
   
 private
