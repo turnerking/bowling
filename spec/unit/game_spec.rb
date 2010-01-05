@@ -39,20 +39,20 @@ describe Game do
   describe "10 frames" do
     it "on all strikes" do
       game = Game.new("X X X X X X X X X X X X")
-      game.legal?
-      game.game_checker.frames.should == 10
+      game.legal?.should be_true
+      game.frames.should == 10
     end
   
     it "on all 9's" do
       game = Game.new("9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0 9 0")
-      game.legal?
-      game.game_checker.frames.should == 10
+      game.legal?.should be_true
+      game.frames.should == 10
     end
   
     it "on spare/9's" do
       game = Game.new("9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9 / 9")
-      game.legal?
-      game.game_checker.frames.should == 10
+      game.legal?.should be_true
+      game.frames.should == 10
     end
   end
 

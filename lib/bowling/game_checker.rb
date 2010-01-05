@@ -1,24 +1,19 @@
-class GameChecker
-  attr_accessor :game, :frames, :start_of_frame
+module GameChecker
+  attr_accessor :frames, :start_of_frame
   
   ILLEGAL_ENTRIES = /[^0-9X\/]/
   
-  def initialize(game)
-    @game = game
+  def legal?
+    raise "Needs to have scores to check" unless self.respond_to?(:scores)
     @frames = 1
     @start_of_frame = true
-  end
-  
-  def legal_game?
-    @frames = 1
-    @start_of_frame = true
-    @game.scores.each do |score|
+    self.scores.each do |score|
       return false if illegal_mark?(score.mark)
       return false if too_many_pins?(score)
       increment_values(score.mark, score.next_score)
     end
-    return false if illegal_last_frame?(@game.scores[-3..-1])
-    subtract_frames(@game.scores[-3..-1])
+    return false if illegal_last_frame?(self.scores[-3..-1])
+    subtract_frames(self.scores[-3..-1])
     return true
   end
   
